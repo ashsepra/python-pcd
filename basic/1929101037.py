@@ -1,6 +1,6 @@
 # Author I Putu Ashadi Sedana Pratama
 # Email: ashsepra@gmail.com
-# This file contain basic image processing using opencv-python package
+# This file contains basic image processing using an opencv-python package
 # before running the code below, please make sure already installed opencv-python package
 # How to install is below
 # https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_table_of_contents_setup/py_table_of_contents_setup.html
