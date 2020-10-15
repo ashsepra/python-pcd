@@ -56,12 +56,12 @@ def display_color_index(img_arg, row, col, img_type) :
   else :
     # RGB image and RGBA image contain the third index for channel information
     # Assume that the length of the array is always 3
-    # Display color of RGB and RGBA image start with Blue and continue by Red and Green
+    # Display color of RGB and RGBA image start with Blue and continue by Green and Red
     if len(dimension) > 2 :
       print('Color value at row ', row ,', column ', col ,'are : ')
       print('Blue ', img_arg[row, col][0])
-      print('Red ', img_arg[row, col][1])
-      print('Green ', img_arg[row, col][2])
+      print('Green ', img_arg[row, col][1])
+      print('Red ', img_arg[row, col][2])
     else :
       # Display color of grayscale and binary image
       print('Color value at row ', row ,', column ', col ,'is : ', img_arg[row, col])
