@@ -3,7 +3,7 @@
 # This file contains pointwise image processing using an opencv-python package
 # pointwise image processing described as 3 main processes such as arithmetic, geometry, and scaling
 
-import cv2
+from cv2 import cv2
 import numpy as np
 
 # Get image from "images" directory
@@ -17,11 +17,17 @@ row_length = img_width - 1
 
 # Doing combine image processing with scalar value
 scalar_value = 35
-img_combine = np.zeros((img_width, img_height, 3), dtype = "uint8")
-for x in range(0, img_width) :
-  for y in range(0, img_height) :
-    img_combine[x, y] = scalar_value + img_src[x, y]
+img_combine = img_src.copy()
+# for x in range(0, img_width) :
+#   for y in range(0, img_height) :
+#     (b, g, r) = img_src[x, y]
+#     bnew = scalar_value + b
+#     gnew = scalar_value + g
+#     rnew = scalar_value + r
+#     print(b, g, r, bnew, gnew, rnew)
+#     img_combine[x, y] = (bnew, gnew, rnew)
 
+img_combine = cv2.add(img_src, scalar_value)
 cv2.imwrite('./images/pointwise/Lenna-Add-Scalar.png', img_combine)
 
 # Doing negative image processing

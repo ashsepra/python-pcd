@@ -6,7 +6,7 @@
 # https://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_table_of_contents_setup/py_table_of_contents_setup.html
 # I'm using python version 3 with the newest version of python 3.7.3
 
-import cv2
+from cv2 import cv2
 import numpy as np
 
 file_img = './images/Lenna.png'
