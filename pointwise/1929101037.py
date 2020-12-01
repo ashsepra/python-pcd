@@ -16,7 +16,7 @@ column_length = img_height - 1
 row_length = img_width - 1
 
 # Doing combine image processing with scalar value
-scalar_value = 35
+scalar_value = -50
 img_combine = img_src.copy()
 # for x in range(0, img_width) :
 #   for y in range(0, img_height) :
