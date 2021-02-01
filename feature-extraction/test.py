@@ -77,8 +77,40 @@ def lbp_calculated_pixel(img, x, y):
           
     return val
 
-for leaf in range(21,26):
-    path = './dataset/leaf/TB' + str(leaf) + '.bmp'
+# function draw zoning
+def draw_zoning(h_list_zone, w_list_zone):
+    for h_zoning in h_list_zone:
+        point1 = [0, h_zoning]
+        point2 = [width - 1, h_zoning]
+
+        x_values = [point1[0], point2[0]]
+        y_values = [point1[1], point2[1]]
+
+        plt.plot(x_values, y_values, color='red')
+
+    for w_zoning in w_list_zone:
+        point1 = [w_zoning, 0]
+        point2 = [w_zoning, height-1]
+
+        x_values = [point1[0], point2[0]]
+        y_values = [point1[1], point2[1]]
+
+        plt.plot(x_values, y_values, color='green')
+
+def calculate_lbp_pixel (height, width, img_lbp):
+    for i in range(0, height): 
+        for j in range(0, width): 
+            img_lbp[i, j] = lbp_calculated_pixel(img_gray, i, j)
+
+for leaf in range(1,26):
+# leafs = ['base','cermai','dapdap', 'JS', 'kayutoktok', 'MD', 'menuh', 'piduh', 'pucuk', 'pule', 'TB']
+# leafs = ['base']
+
+
+# for idx, leaf_type in enumerate(leafs):
+    # leaf = 1
+    leaf_type = 'TB'
+    path = './dataset/leaf/' + leaf_type + str(leaf) + '.bmp'
     img_bgr = cv2.imread(path, 1)
     height, width, _ = img_bgr.shape
     img_bright = increase_brightness(img_bgr, 80)
@@ -92,14 +124,12 @@ for leaf in range(21,26):
     img_lbp = np.zeros((height, width), np.uint8) 
 
     # Calculating LBP pixel
-    for i in range(0, height): 
-        for j in range(0, width): 
-            img_lbp[i, j] = lbp_calculated_pixel(img_gray, i, j) 
+    calculate_lbp_pixel(height, width, img_lbp)
 
     # Create zoning and calculating average
     # make 6x6 zone and calculate average
-
-    plt.imshow(img_lbp, cmap = 'gray')
+    plt.title( leaf_type + str(leaf))
+    # plt.imshow(img_lbp, cmap = 'gray')
 
     div_h_split = 6
     div_w_split = 6
@@ -126,43 +156,31 @@ for leaf in range(21,26):
 
     w_list_zone.append(w_calc_zone + w_mood_zone - 1)
 
-    for h_zoning in h_list_zone:
-        point1 = [0, h_zoning]
-        point2 = [width - 1, h_zoning]
-
-        x_values = [point1[0], point2[0]]
-        y_values = [point1[1], point2[1]]
-
-        plt.plot(x_values, y_values, color='red')
-
-    for w_zoning in w_list_zone:
-        point1 = [w_zoning, 0]
-        point2 = [w_zoning, height-1]
-
-        x_values = [point1[0], point2[0]]
-        y_values = [point1[1], point2[1]]
-
-        plt.plot(x_values, y_values, color='green')
+    # Draw zoning
+    draw_zoning(h_list_zone, w_list_zone)
+    # plt.imsave(leaf_type + str(leaf) + '.bmp', img_gray, format='bmp', cmap = 'gray')
+    plt.imshow(img_lbp, cmap = 'gray')
+    plt.savefig(leaf_type + str(leaf) + '.png')
 
     # Calculated average each of zoning
-    average_data = []
-    for split_number_h in range(div_h_split):
-        start_i_index = 0 if split_number_h < 1 else h_list_zone[split_number_h-1] + 1
-        end_i_index = h_list_zone[split_number_h]
+    # average_data = []
+    # for split_number_h in range(div_h_split):
+    #     start_i_index = 0 if split_number_h < 1 else h_list_zone[split_number_h-1] + 1
+    #     end_i_index = h_list_zone[split_number_h]
 
-        for split_number_w in range(div_w_split):
-            start_j_index = 0 if split_number_w < 1 else w_list_zone[split_number_w-1] + 1
-            end_j_index = w_list_zone[split_number_w]
+    #     for split_number_w in range(div_w_split):
+    #         start_j_index = 0 if split_number_w < 1 else w_list_zone[split_number_w-1] + 1
+    #         end_j_index = w_list_zone[split_number_w]
 
-            # print(split_number_w, start_i_index, end_i_index, start_j_index, end_j_index)
-            array_data = []
-            for i in range(start_i_index, end_i_index):
-                for j in range(start_j_index, end_j_index):
-                    array_data.append(img_lbp[i, j])
+    #         # print(split_number_w, start_i_index, end_i_index, start_j_index, end_j_index)
+    #         array_data = []
+    #         for i in range(start_i_index, end_i_index):
+    #             for j in range(start_j_index, end_j_index):
+    #                 array_data.append(img_lbp[i, j])
 
-            average_data.append(np.average(array_data))
+    #         average_data.append(np.average(array_data))
 
-    string_data = ';'.join([str(elem) for elem in average_data]) 
-    print(string_data.replace('.', ','))
+    # string_data = ';'.join([str(elem) for elem in average_data]) 
+    # print(string_data.replace('.', ','))
 
-# plt.show()
+    # plt.show()
